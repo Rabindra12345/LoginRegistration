@@ -1,10 +1,16 @@
 package com.rabindra.LoginRegistration.appuser;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import com.rabindra.LoginRegistration.appuser.regis.token.ConfirmationToken;
+import com.rabindra.LoginRegistration.appuser.regis.token.ConfirmationTokenRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -16,6 +22,8 @@ public class AppUserService implements UserDetailsService{
 	
 	private final String USER_NOT_FOUND_MSG = "User with username %s not found.";
 	private final AppUserRepository appUserRepository;
+	
+	private final ConfirmationTokenRepository confirmationTokenRepository;
 	
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
@@ -38,9 +46,32 @@ public class AppUserService implements UserDetailsService{
 		
 		appUser.setPassword(encodedPass);
 		
+		appUserRepository.save(appUser);
+		
 		//TODO: send confirmation token
 		
-		return "it works";
+		//Generate UUID
+		
+		String token = UUID.randomUUID().toString();
+		
+		ConfirmationToken confirmationToken = new ConfirmationToken(
+				token,
+				LocalDateTime.now(),
+				LocalDateTime.now().plusMinutes(15),
+				appUser
+		);
+		
+		//save the confirmation token
+		confirmationTokenRepository.save(confirmationToken);
+		
+		//Generate email link
+		
+		
+		return token;
 	}
+	
+	 public int enableAppUser(String email) {
+	        return appUserRepository.enableAppUser(email);
+	    }
 
 }

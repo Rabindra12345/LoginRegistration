@@ -49,9 +49,8 @@ public class AppUser implements UserDetails {
 	
 	private String password;
 	
-	private boolean locked;
-	
-	private boolean enabled;
+	private Boolean locked = false;
+    private Boolean enabled = false;
 	
 	@Enumerated(EnumType.STRING)
 	private Role role;
@@ -63,44 +62,44 @@ public class AppUser implements UserDetails {
 		return Collections.singletonList(authority);
 	}
 
-	@Override
-	public String getPassword() {
-		return password;
-	}
-
-	@Override
-	public String getUsername() {
-		return email;
-	}
-	
-	
-	public String getFirstName(){
-		return firstName;
-	}
-	
-	public String getLastName() {
-		return lastName;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return !locked;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+//	@Override
+//	public String getPassword() {
+//		return password;
+//	}
+//
+//	@Override
+//	public String getUsername() {
+//	    return email;
+//	 }
+//	
+//	
+//	public String getFirstName(){
+//		return firstName;
+//	}
+//	
+//	public String getLastName() {
+//		return lastName;
+//	}
+//
+//	@Override
+//	public boolean isAccountNonExpired() {
+//		return true;
+//	}
+//
+//	@Override
+//	public boolean isAccountNonLocked() {
+//		return !locked;
+//	}
+//
+//	@Override
+//	public boolean isCredentialsNonExpired() {
+//		return true;
+//	}
+//
+//	@Override
+//	public boolean isEnabled() {
+//		return true;
+//	}
 
 	public AppUser(String firstName, String lastName, String email, String password, Role role) {
 		this.firstName = firstName;
@@ -110,5 +109,45 @@ public class AppUser implements UserDetails {
 		
 		this.role = role;
 	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+	
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+
+	
+	public String getFirstName(){
+		return firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+
+	  @Override
+	    public boolean isAccountNonExpired() {
+	        return true;
+	    }
+
+	    @Override
+	    public boolean isAccountNonLocked() {
+	        return !locked;
+	    }
+
+	    @Override
+	    public boolean isCredentialsNonExpired() {
+	        return true;
+	    }
+
+	    @Override
+	    public boolean isEnabled() {
+	        return enabled;
+	    }
 
 }

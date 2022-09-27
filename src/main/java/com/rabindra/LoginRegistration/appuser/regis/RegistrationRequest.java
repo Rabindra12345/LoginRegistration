@@ -1,4 +1,4 @@
-package com.rabindra.LoginRegistration.appuser.controller;
+package com.rabindra.LoginRegistration.appuser.regis;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
